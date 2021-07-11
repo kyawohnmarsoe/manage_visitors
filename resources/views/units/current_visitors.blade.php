@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Visitors List <a href="{{url('/visitors/create')}}"><button class="btn btn-primary float-right ">Add New Visitor</button></a></div>
+                <div class="card-header">Visitors List <a href="{{url('/visitors')}}"><button class="btn btn-secondary float-right ">Back</button></a></div>
                 @if (session('msg'))
                     <div class="alert alert-success" role="alert">
                     {{ session('msg') }}
@@ -29,7 +29,6 @@
                             <th scope="col">NRIC No.</th>
                             <th scope="col">Entry At</th>
                             <th scope="col">Exit At</th>
-                            <th scope="col">Date</th>
                             <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -37,39 +36,38 @@
 
                             @foreach ($visitors as $key=>$visitor)
                             <tr>
-                            <th scope="row">{{$visitor->id}}</th>
-                            <td><a href="{{url('/visitors/detail/'.$visitor->visitor_name.'&'.$visitor->nric_no)}}">{{$visitor->visitor_name}}</a></td>
-                            <td>{{$visitor->contact_no}}</td>
-                            <td>{{$visitor->block_no}}</td>
-                            <td>{{$visitor->unit_no}}</td>
-                            <td>{{$visitor->nric_no}}</td>
-                            <td>{{$visitor->entry_at}}</td>
+                            <th scope="row">{{$visitor['id']}}</th>
+                            <td>{{$visitor['visitor_name']}}</td>
+                            <td>{{$visitor['contact_no']}}</td>
+                            <td>{{$visitor['block_no']}}</td>
+                            <td>{{$visitor['unit_no']}}</td>
+                            <td>{{$visitor['nric_no']}}</td>
+                            <td>{{$visitor['entry_at']}}</td>
                             <td>
-                            @isset($visitor->exit_at)
-                            {{$visitor->exit_at}}
+                            @isset($visitor['exit_at'])
+                            {{$visitor['exit_at']}}
                             @endisset
-                            @empty($visitor->exit_at)
-                            <form method="post" action="{{url('/visitors/exit/'.$visitor->id)}}">
+                            @empty($visitor['exit_at'])
+                            <form method="post" action="{{url('/visitors/exit/'.$visitor['id'])}}">
                             @csrf 
                             @method('PATCH')
                             <button class="btn btn-success" type="submit">Exit</button>
                             </form>
                             @endempty
                             </td>
-                          
-                            <td>{{$visitor->created_at->format('d-m-Y')}}</td>
+                         
                             <td>
-                            <a href="{{url('/visitors/'.$visitor->id)}}">Edit</a>
+                            <a href="{{url('/visitors/'.$visitor['id'])}}">Edit</a>
                             | 
-                            <a href="#" onclick="myFunction({{$visitor->id}})" >Delete</a>
+                            <a href="#" onclick="myFunction({{$visitor['id']}})" >Delete</a>
                             </td>
                             </tr>
                             @endforeach
                         
                         </tbody>
                 </table>
-                <div class="d-flex justify-content-center ">
-                    {{ $visitors->links() }}
+                  <div class="d-flex justify-content-center ">
+                   
                     </div>
                 </div>
             </div>

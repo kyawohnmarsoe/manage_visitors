@@ -28,6 +28,8 @@ Route::post('/units', 'UnitController@store')->name('units.store');
 Route::get('/units/{id}', 'UnitController@show');
 Route::put('/units/{id}', 'UnitController@update');
 Route::delete('/units/{id}', 'UnitController@destroy');
+Route::post('/units/search/', 'UnitController@search')->name('units.search');
+Route::get('/units/current/{id}', 'UnitController@current');
 
 Route::get('/visitors', 'VisitorController@index')->name('visitors')->middleware('auth');
 Route::get('/visitors/create', 'VisitorController@create')->name('visitors.create');
@@ -37,6 +39,7 @@ Route::put('/visitors/{id}', 'VisitorController@update')->middleware('auth');
 Route::patch('/visitors/exit/{id}', 'VisitorController@exit')->middleware('auth');
 Route::delete('/visitors/{id}', 'VisitorController@destroy')->middleware('auth');
 Route::get('/visitors/detail/{name}&{nric}', 'VisitorController@detail');
+
 
 
 

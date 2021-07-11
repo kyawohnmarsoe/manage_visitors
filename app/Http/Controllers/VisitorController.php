@@ -31,7 +31,7 @@ class VisitorController extends Controller
         // check if there is a unit 
         $unit = Unit::where('block_no',$request->block_no)->where('unit_no',$request->unit_no)->get();
         if(!count($unit)){
-            return back()->with('msg','No Unit Found!');
+            return back()->with('err','No Unit Found!');
         }
 
         // Check visitor limits at unit
@@ -87,8 +87,12 @@ class VisitorController extends Controller
             return back()->with('err','No Unit Found!');
         }
         // Check visitor already exit
-      
-            $visitor = Visitor::findOrFail($id);
+        $visitor = Visitor::findOrFail($id);
+           
+            if($visitor->exit_at ==Null && $visitor->block_no != $request->block_no || $visitor->unit_no != $request->unit_no){
+                return back()->with('err','Can not be changed unit before visitor exit');
+            }
+
             $visitor->update([
                 'visitor_name' => $request->visitor_name,
                 'contact_no' => $request->contact_no,
@@ -99,6 +103,8 @@ class VisitorController extends Controller
                 'exit_at' => $request->exit_at,
             ]);
             return redirect()->route('visitors')->with('msg','Visitor\'s Information has sucessfully updated!');
+
+            
 
     }
     public function exit($id){
@@ -144,4 +150,5 @@ class VisitorController extends Controller
         // dd($data);
         return view('visitors.detail',['visitors'=>$visitors]);
     }
+
 }

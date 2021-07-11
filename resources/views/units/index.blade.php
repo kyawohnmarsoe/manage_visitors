@@ -4,8 +4,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <h3 class="text-center">Units List</h3>
             <div class="card">
-                <div class="card-header ">Units List <a href="/units/create"><button class="btn btn-primary float-right ">Add New Unit</button></a></div>
+                <div class="card-header d-flex justify-content-between">
+                <div class="pt-1">
+                    <form action="{{route('units.search')}}" method="post">
+                    @csrf
+                    <input type="number" name="search_block" />
+                    <input type="text" name="search_unit" />
+                    <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div> <a href="{{url('/units/create')}}"><button class="btn btn-primary ">Add New Unit</button></a></div>
+                
+                </div>
+
                 @if (session('msg'))
                     <div class="alert alert-success" role="alert">
                     {{ session('msg') }}
@@ -16,6 +29,7 @@
                     {{ session('err') }}
                     </div>
                 @endif
+
                 <div class="card-body">
                  <!-- Units Table -->
                  <table class="table">
@@ -41,11 +55,13 @@
                             <td>{{$unit->contact_no}}</td>
                             <td>
                             @isset($unit->current_visitors)
-                             {{count($unit->current_visitors)}}
+                                <a href="{{url('/units/current/'.$unit->id)}}">
+                                {{count($unit->current_visitors)}}
+                                </a>
                             @endisset
                             </td>
                             <td>
-                            <a href="/units/{{$unit->id}}">Edit</a>
+                            <a href="{{url('/units/'.$unit->id)}}">Edit</a>
                             | 
                             <a href="#" onclick="myFunction({{$unit->id}})" >Delete</a>
                             </td>
@@ -90,7 +106,7 @@
 function myFunction(x) {
     $('#exampleModal').modal('show');
     document.getElementById('delete_id').innerHTML=x;
-    document.getElementById('delete_form').action=`/units/${x}`;
+    document.getElementById('delete_form').action=`{{url('/units/${x}')}}`;
 }
 </script>
 @endsection

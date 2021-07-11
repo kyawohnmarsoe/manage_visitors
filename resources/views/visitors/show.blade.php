@@ -18,7 +18,7 @@
                 @endif
 
                 <div class="card-body">
-                <form method="post" action="/visitors/{{$visitor->id}}">
+                <form method="post" action="{{url('/visitors/'.$visitor->id)}}">
                             @csrf 
                             @method('PUT')
 

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Visitors List <a href="/visitors"><button class="btn btn-secondary float-right ">Back</button></a></div>
+                <div class="card-header">Visitors List <a href="{{url('/visitors')}}"><button class="btn btn-secondary float-right ">Back</button></a></div>
                 @if (session('msg'))
                     <div class="alert alert-success" role="alert">
                     {{ session('msg') }}
@@ -48,7 +48,7 @@
                             {{$visitor->exit_at}}
                             @endisset
                             @empty($visitor->exit_at)
-                            <form method="post" action="/visitors/exit/{{$visitor->id}}">
+                            <form method="post" action="{{url('/visitors/exit/'.$visitor->id)}}">
                             @csrf 
                             @method('PATCH')
                             <button class="btn btn-success" type="submit">Exit</button>
@@ -57,7 +57,7 @@
                             </td>
                          
                             <td>
-                            <a href="/visitors/{{$visitor->id}}">Edit</a>
+                            <a href="{{url('/visitors/'.$visitor->id)}}">Edit</a>
                             | 
                             <a href="#" onclick="myFunction({{$visitor->id}})" >Delete</a>
                             </td>
@@ -102,7 +102,7 @@
 function myFunction(x) {
     $('#exampleModal').modal('show');
     document.getElementById('delete_id').innerHTML=x;
-    document.getElementById('delete_form').action=`/visitors/${x}`;
+    document.getElementById('delete_form').action=`{{url('/visitors/${x}')}}`;
 }
 </script>
 @endsection

@@ -17,7 +17,7 @@
                     </div>
                 @endif
                 <div class="card-body">
-                            <form method="POST" action="/units/{{$unit->id}}" >
+                            <form method="POST" action="{{url('/units/'.$unit->id)}}" >
                                         @csrf
                                         @method('PUT')
                                         <div class="form-group row">

@@ -68,4 +68,16 @@ class UnitController extends Controller
         $unit->delete();
         return redirect()->route('units')->with('msg','Unit has been deleted!');
     }
+
+    public function search(Request $request){
+        $units = Unit::where('block_no',$request->search_block)->orwhere('unit_no',$request->search_unit)->paginate(10);
+        // dd($data);
+        return view('units.detail',['units'=>$units]);
+    }
+    public function current($id){
+        $units = Unit::findOrFail($id);
+        $visitors = $units->current_visitors;
+       
+        return view('units.current_visitors',['visitors'=>$visitors]);
+    }
 }
